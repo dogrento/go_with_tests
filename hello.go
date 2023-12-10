@@ -1,16 +1,20 @@
 package main
 
 // Importing packages
-import "fmt"
+import (
+	"fmt"
+)
 
-const engHelloPrefix = "Hello, "
-const spaHelloPrefix = "Hola, "
-const frHelloPrefix = "Bonjour, "
-const hueHelloPrefix = "Salve, "
-
-const spanish = "spanish"
-const french = "french"
-const huehue = "huehue"
+const(
+  engHelloPrefix = "Hello, "
+  spaHelloPrefix = "Hola, "
+  frHelloPrefix = "Bonjour, "
+  hueHelloPrefix = "Salve, "
+                              
+  spanish = "spanish"
+  french = "french"
+  huehue = "huehue"
+)
 
 //Creating a function that returns a string
 func Hello(name string, lang string) string {
@@ -18,20 +22,24 @@ func Hello(name string, lang string) string {
     name = "World"
   }
 
-  prefix := engHelloPrefix
+  return greetingPrefix(lang) + name
+}
 
+func greetingPrefix(lang string) (prefix string) {
   switch lang{
-  case "french":
-    prefix = frHelloPrefix
-  case "spanish":
-    prefix = spaHelloPrefix
-  case "huehue":
-    prefix = hueHelloPrefix
-  }
-
-  return prefix + name
+    case "french":
+      prefix = frHelloPrefix
+    case "spanish":
+      prefix = spaHelloPrefix
+    case "huehue":
+      prefix = hueHelloPrefix
+    default:
+      prefix = engHelloPrefix
+    }
+  return
 }
 
 func main(){
   fmt.Println(Hello("Dgt", ""))
 }
+
