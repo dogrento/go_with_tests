@@ -33,7 +33,7 @@ func TestSumAll(t *testing.T){
 func assertMsg(t testing.TB, got []int, want []int, num1 []int, num2 []int){
   t.Helper()
   if num2 != nil{
-    if got != want{
+    if isSlicesEqual(got, want) == true{
       t.Errorf("\ngot -> %d \nwant -> %d\ngiven -> %v\n%v", got, want, num1, num2)
     }
   }
