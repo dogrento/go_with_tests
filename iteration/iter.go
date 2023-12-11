@@ -1,5 +1,6 @@
 package iteration
 
+// Simple func that iters a characters
 func Repeat(chars string) string{
   // declaring variable typed as string
   var rep string
