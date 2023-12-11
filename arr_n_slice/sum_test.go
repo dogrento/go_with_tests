@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestSum(t *testing.T){
   t.Run("collection of any size", func(t *testing.T){
@@ -29,18 +31,34 @@ func TestSumAll(t *testing.T){
   assertMsg(t, got1, want1, arr1, arr2)
   assertMsg(t, got2, want2, arr3, nil)
 }
+
+func TestIsSliceEqual(t *testing.T){
+  arr1 := []int{1, 2, 3}
+  arr2 := []int{1, 2, 3}
+
+  got := isSlicesEqual(arr1, arr2)
+  want := true
+
+  if got != want{
+    t.Errorf("got -> %t\n want -> %t", got, want)
+  }
+}
   
 func assertMsg(t testing.TB, got []int, want []int, num1 []int, num2 []int){
   t.Helper()
   if num2 != nil{
-    if isSlicesEqual(got, want) == true{
+    if !isSlicesEqual(got, want){
       t.Errorf("\ngot -> %d \nwant -> %d\ngiven -> %v\n%v", got, want, num1, num2)
+    }
+  } else {
+    if !isSlicesEqual(got, want){
+      t.Errorf("\ngot -> %d \nwant -> %d\ngiven -> %v\n", got, want, num1)
     }
   }
 }
 
 func isSlicesEqual(arr1 []int, arr2 []int) bool{
-  if len(arr2) != len(arr2){
+  if len(arr1) != len(arr2){
     return false
   }
 

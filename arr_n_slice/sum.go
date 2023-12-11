@@ -8,3 +8,13 @@ func Sum(nums []int) int{
   return sum 
 }
 
+func SumAll(slc1 []int, slc2 []int) []int{
+  var response []int
+  if slc2 != nil{
+    response = append(response, Sum(slc1))
+    response = append(response, Sum(slc2))
+  } else{
+    response = append(response, Sum(slc1))
+  }
+  return response
+}
