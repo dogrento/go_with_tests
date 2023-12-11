@@ -23,8 +23,12 @@ func SumAllTails(slcs ...[]int) []int{
   var response []int
 
   for _, nums := range slcs {
-    tail := nums[1:]
-    response = append(response, Sum(tail))
+    if len(nums) == 0{
+      response = append(response, 0)
+    } else {
+      tail := nums[1:]
+      response = append(response, Sum(tail))
+    }
   }
 
   return response
