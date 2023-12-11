@@ -1,6 +1,7 @@
 package main
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -28,20 +29,34 @@ func TestSumAll(t *testing.T){
   got2 := SumAll(arr3, nil)
   want2 := []int{3}
 
-  assertMsg(t, got1, want1, arr1, arr2)
-  assertMsg(t, got2, want2, arr3, nil)
+  t.Run("Running with assrtMsg()", func(t *testing.T){
+    assertMsg(t, got1, want1, arr1, arr2)
+    assertMsg(t, got2, want2, arr3, nil)
+  })
+
+  t.Run("Runnig with reflect.DeepEqual()", func(t *testing.T){
+    if !reflect.DeepEqual(got1, want1){
+      t.Errorf("got -> %v\nwant-> %v", got1, want1)
+    }
+
+    if !reflect.DeepEqual(got2, want2){
+      t.Errorf("got -> %v\nwant-> %v", got2, want2)
+    }
+  })
 }
 
 func TestIsSliceEqual(t *testing.T){
-  arr1 := []int{1, 2, 3}
-  arr2 := []int{1, 2, 3}
+  t.Run("Getting a true validation", func(t *testing.T){
+    arr1 := []int{1, 2, 3}
+    arr2 := []int{1, 2, 3}
 
-  got := isSlicesEqual(arr1, arr2)
-  want := true
+    got := isSlicesEqual(arr1, arr2)
+    want := true
 
-  if got != want{
-    t.Errorf("got -> %t\n want -> %t", got, want)
-  }
+    if got != want{
+      t.Errorf("got -> %t\n want -> %t", got, want)
+    }
+  })
 }
   
 func assertMsg(t testing.TB, got []int, want []int, num1 []int, num2 []int){
