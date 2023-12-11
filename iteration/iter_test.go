@@ -7,7 +7,8 @@ import (
 
 
 func TestRepeat(t *testing.T){
-  repeated := Repeat("a")
+  value := 5
+  repeated := Repeat("a", value)
   expected := "aaaaa"
 
   if repeated != expected{
@@ -17,7 +18,7 @@ func TestRepeat(t *testing.T){
 
 // to run test: go test -v
 func ExampleRepeat(){
-  example := Repeat("a")
+  example := Repeat("a", 5)
   fmt.Println(example)
   // Output: aaaaa
 }
@@ -26,6 +27,6 @@ func ExampleRepeat(){
 func BenchmarkRepeat(b *testing.B){
   // where b.N is determined by benchmark system
   for i := 0; i< b.N; i++ {
-    Repeat("a")
+    Repeat("a", 5)
   }
 }
