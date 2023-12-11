@@ -45,6 +45,21 @@ func TestSumAll(t *testing.T){
   })
 }
 
+func TestSumAllTails(t *testing.T){
+  t.Run("Sum tails", func(t *testing.T){
+    arr1 := []int{1, 2}
+    arr2 := []int{3, 4, 1}
+
+    got := SumAllTails(arr1, arr2)
+    want := []int{2, 5}
+
+    if !reflect.DeepEqual(got, want){
+      t.Errorf("got -> %v \nwant -> %v", got, want)
+    }
+
+  })
+}
+
 func TestIsSliceEqual(t *testing.T){
   t.Run("Getting a true validation", func(t *testing.T){
     arr1 := []int{1, 2, 3}

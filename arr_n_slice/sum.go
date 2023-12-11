@@ -18,3 +18,14 @@ func SumAll(slc1 []int, slc2 []int) []int{
   }
   return response
 }
+
+func SumAllTails(slcs ...[]int) []int{
+  var response []int
+
+  for _, nums := range slcs {
+    tail := nums[1:]
+    response = append(response, Sum(tail))
+  }
+
+  return response
+}
