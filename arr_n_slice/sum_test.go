@@ -46,6 +46,18 @@ func TestSumAll(t *testing.T){
 }
 
 func TestSumAllTails(t *testing.T){
+  // Assign function to a var
+  // - It can be useful to bind a func to other local var in scope
+  // - Also allos to reduce the surface area of API
+  // - It can not be accessed by other dunc in this package
+  checkSums := func(t testing.TB, got, want []int){
+    t.Helper()
+
+    if !reflect.DeepEqual(got, want){
+      t.Errorf("got -> %v \nwant -> %v", got, want)
+    }
+  }
+
   t.Run("Sum tails", func(t *testing.T){
     arr1 := []int{1, 2}
     arr2 := []int{3, 4, 1}
@@ -53,9 +65,7 @@ func TestSumAllTails(t *testing.T){
     got := SumAllTails(arr1, arr2)
     want := []int{2, 5}
 
-    if !reflect.DeepEqual(got, want){
-      t.Errorf("got -> %v \nwant -> %v", got, want)
-    }
+    checkSums(t, got, want)
   })
 
   t.Run("Sum tails from 3 slices", func(t *testing.T){
@@ -66,9 +76,7 @@ func TestSumAllTails(t *testing.T){
     got := SumAllTails(arr1, arr2, arr3)
     want := []int{2, 2, 2}
 
-    if !reflect.DeepEqual(got, want){
-      t.Errorf("got -> %v \nwant -> %v", got, want)
-    }
+    checkSums(t, got, want)
   })
 
   t.Run("Sum tails empty slices", func(t *testing.T){
