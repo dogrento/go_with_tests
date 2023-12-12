@@ -13,6 +13,7 @@ func TestPerimeter(t *testing.T){
       t.Errorf("\ngot -> %g\nwant -> %g", got, want)
     }
   }
+
   t.Run("Rectangle perimeter", func(t *testing.T){
     rectangle := Rectangle{10.0, 10.0}
     want := 40.0 
@@ -25,6 +26,25 @@ func TestPerimeter(t *testing.T){
     want := 62.83185307179586
 
     checkPerimeter(t, circle, want)
+  })
+
+  t.Run("Table driven tests", func(t *testing.T){
+    perimeterTests := []struct{
+      name string
+      shape Shape
+      hasPerimeter float64
+    }{
+      {name: "Rectangle", shape: Rectangle{10, 10}, hasPerimeter: 40},
+      {name: "Circle", shape: Circle{10}, hasPerimeter: 62.83185307179586},
+      {name: "Triangle", shape: Triangle{Height: 10, Base: 10}, hasPerimeter:30},
+    }
+
+    for _, tt := range perimeterTests{
+      got := tt.shape.Perimeter()
+      if got != tt.hasPerimeter{
+        t.Errorf("\n%#v\ngot -> %g\nhasPerimeter -> %g", tt.shape,got, tt.hasPerimeter)
+      }
+    }
   })
 }
 

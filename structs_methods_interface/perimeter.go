@@ -38,5 +38,5 @@ func(t Triangle) Area() float64{
   return (t.Base * t.Height) / 2 //or (t.Base * t.Height) * 0.5
 }
 func(t Triangle) Perimeter() float64{
-  return 0 
+  return t.Base * 3  
 }
