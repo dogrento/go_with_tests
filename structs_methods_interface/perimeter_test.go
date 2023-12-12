@@ -27,10 +27,8 @@ func TestArea(t *testing.T){
 
   t.Run("Rectangle area", func(t *testing.T){
     rectangle := Rectangle{12.0, 6.0}
-    // got := rectangle.Area()
     want := 72.0
 
-    // CompareResult(t, got, want)
     checkArea(t, rectangle, want)
   })
 
@@ -39,16 +37,9 @@ func TestArea(t *testing.T){
     rad = 10
     circle := Circle{rad}
 
-    // got := circle.Area()
     want := 314.1592653589793
 
     checkArea(t, circle, want)
-
-    // if got != want{
-    //   // %g will print a more precise decimal num 
-    //   // e.g f -> 7.068583; g -> 7.0685834705770345
-    //   t.Errorf("\ngot -> %g\nwant -> %g", got, want)
-    // }
   })
 }
 

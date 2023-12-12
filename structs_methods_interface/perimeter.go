@@ -1,6 +1,8 @@
 package main
 
-const PI = 3.141592653589793
+import "math"
+
+// const PI = 3.141592653589793
 
 type Shape interface{
   Area() float64
@@ -22,7 +24,7 @@ type Circle struct{
 }
 
 func(c Circle) Area() float64{
-  return (2 * PI * c.Radius * c.Radius)/2
+  return (2 * math.Pi * c.Radius * c.Radius)/2
 }
 
 func Perimeter(rec Rectangle) float64{
