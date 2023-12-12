@@ -15,20 +15,15 @@ func TestPerimeter(t *testing.T){
   }
   t.Run("Rectangle perimeter", func(t *testing.T){
     rectangle := Rectangle{10.0, 10.0}
-
-    // got := rectangle.Perimeter()
     want := 40.0 
 
-    // CompareResult(t, got, want)
     checkPerimeter(t, rectangle, want)
   })
 
   t.Run("Circle perimeter", func(t *testing.T){
     circle := Circle{10}
-    // got := circle.Perimeter()
     want := 62.83185307179586
 
-    // CompareResult(t, got, want)
     checkPerimeter(t, circle, want)
   })
 }
@@ -58,6 +53,26 @@ func TestArea(t *testing.T){
     want := 314.1592653589793
 
     checkArea(t, circle, want)
+  })
+
+  t.Run("Table driven tests", func(t *testing.T){
+    // Creating anonymous struct
+    // - declaring a slice of structs ([]struct)
+    // - then fill de slice with cases
+    areaTests := []struct{
+      shape Shape
+      want float64
+    }{
+      {Rectangle{12, 6}, 72.0},
+      {Circle{10}, 314.1592653589793},
+    }
+
+    for _, tt := range areaTests{
+      got := tt.shape.Area()
+      if got != tt.want{
+        t.Errorf("\ngot -> %g\nwant -> %g", got, tt.want)
+      }
+    }
   })
 }
 
