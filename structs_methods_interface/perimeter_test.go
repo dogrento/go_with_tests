@@ -5,13 +5,31 @@ import (
 )
 
 func TestPerimeter(t *testing.T){
-  t.Run("Rectangle perimeter result", func(t *testing.T){
+  checkPerimeter := func(t testing.TB, shape Shape, want float64){
+    t.Helper()
+    got := shape.Perimeter()
+
+    if got != want{
+      t.Errorf("\ngot -> %g\nwant -> %g", got, want)
+    }
+  }
+  t.Run("Rectangle perimeter", func(t *testing.T){
     rectangle := Rectangle{10.0, 10.0}
 
-    got := Perimeter(rectangle)
+    // got := rectangle.Perimeter()
     want := 40.0 
 
-    CompareResult(t, got, want)
+    // CompareResult(t, got, want)
+    checkPerimeter(t, rectangle, want)
+  })
+
+  t.Run("Circle perimeter", func(t *testing.T){
+    circle := Circle{10}
+    // got := circle.Perimeter()
+    want := 62.83185307179586
+
+    // CompareResult(t, got, want)
+    checkPerimeter(t, circle, want)
   })
 }
 
