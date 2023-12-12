@@ -13,6 +13,12 @@ func TestWallet(t *testing.T){
       t.Errorf("\ngot -> %s\nwant -> %s", got, want)
     }
   }
+  assertError := func(t testing.TB, err error){
+    t.Helper()
+    if err == nil{
+      t.Error("seeking error but none found")
+    }
+  }
 
   t.Run("Get Balance", func(t *testing.T){
     wallet := Wallet{}
@@ -39,9 +45,10 @@ func TestWallet(t *testing.T){
     err := wallet.Withdraw(withdrawBalance)
 
     assertBalance(t, wallet, startingBalance)
+    assertError(t, err)
 
-    if err == nil{
-      t.Error("seeking error but none found")
-    }
+    // if err == nil{
+    //   t.Error("seeking error but none found")
+    // }
   })
 }
