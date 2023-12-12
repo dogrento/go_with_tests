@@ -5,6 +5,10 @@ type Rectangle struct{
   Height float64
 }
 
+type Circle struct{
+  Radius float64
+}
+
 func Perimeter(rec Rectangle) float64{
   result := 2*(rec.Width+rec.Height) 
   return result 
