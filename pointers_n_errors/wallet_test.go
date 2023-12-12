@@ -1,22 +1,30 @@
 package main
 
 import (
-  "testing"
+	"fmt"
+	"testing"
 )
 
 func TestWallet(t *testing.T){
   assertBalance := func(t testing.TB, wallet Wallet, want Bitcoin){
     t.Helper()
     got := wallet.Balance()
+    msg := fmt.Sprintf("\ngot -> %s\nwant -> %s", got, want)
 
     if got != want{
-      t.Errorf("\ngot -> %s\nwant -> %s", got, want)
+      t.Errorf(msg)
+    }else{
+      fmt.Println(msg)
     }
   }
-  assertError := func(t testing.TB, err error){
+  assertError := func(t testing.TB, got error, want string){
     t.Helper()
-    if err == nil{
-      t.Error("seeking error but none found")
+    if got == nil{
+      t.Fatal("seeking error but none found")
+    }
+
+    if got.Error() != want{
+      t.Errorf("\ngot -> %s\nwant -> %s", got, want)
     }
   }
 
@@ -30,7 +38,8 @@ func TestWallet(t *testing.T){
   })
 
   t.Run("withdraw from balance", func(t *testing.T){
-    wallet := Wallet{balance: Bitcoin(20)}
+    value := Bitcoin(20)
+    wallet := Wallet{balance: value}
     wallet.Withdraw(Bitcoin(10))
 
     want := Bitcoin(10)
@@ -44,11 +53,7 @@ func TestWallet(t *testing.T){
     wallet := Wallet{startingBalance} 
     err := wallet.Withdraw(withdrawBalance)
 
+    assertError(t, err, "Cannot withdraw, insufficient funds.")
     assertBalance(t, wallet, startingBalance)
-    assertError(t, err)
-
-    // if err == nil{
-    //   t.Error("seeking error but none found")
-    // }
   })
 }

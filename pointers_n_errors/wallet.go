@@ -30,7 +30,7 @@ func(w *Wallet) Balance() Bitcoin{
 }
 func(w *Wallet) Withdraw(value Bitcoin) error{
   if value > w.balance{
-    return errors.New("Oh, snap!")
+    return errors.New("Cannot withdraw, insufficient funds.")
   }
   w.balance -= value
   return nil
