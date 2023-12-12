@@ -2,6 +2,10 @@ package main
 
 const PI = 3.141592653589793
 
+type Shape interface{
+  Area() float64
+}
+
 type Rectangle struct{
   Width float64
   Height float64
