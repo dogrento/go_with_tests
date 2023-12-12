@@ -2,7 +2,6 @@ package main
 
 import (
   "testing"
-  "fmt"
 )
 
 func TestWallet(t *testing.T){
@@ -11,7 +10,6 @@ func TestWallet(t *testing.T){
     wallet.Deposit(10.0)
 
     got := wallet.Balance()
-    fmt.Printf("addr of balance in Test -> %p\n", &wallet.balance)
     want := 10.0
 
     if got != want{
