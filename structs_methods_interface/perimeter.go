@@ -11,7 +11,6 @@ type Rectangle struct{
   Width float64
   Height float64
 }
-
 // Convention to have to receiver var be the first letter of the typo
 // e.g r Rectangle | c Circle
 func (r Rectangle) Area() float64{
@@ -24,7 +23,6 @@ func (r Rectangle) Perimeter() float64{
 type Circle struct{
   Radius float64
 }
-
 func(c Circle) Area() float64{
   return (2 * math.Pi * c.Radius * c.Radius)/2
 }
@@ -32,11 +30,13 @@ func(c Circle) Perimeter() float64{
   return 2 * math.Pi * c.Radius
 }
 
-func Perimeter(rec Rectangle) float64{
-  result := 2*(rec.Width+rec.Height) 
-  return result 
+type Triangle struct{
+  Height float64
+  Base float64
 }
-
-// func Area(rec Rectangle) float64{
-//   return rec.Width*rec.Height
-// }
+func(t Triangle) Area() float64{
+  return (t.Base * t.Height) / 2 //or (t.Base * t.Height) * 0.5
+}
+func(t Triangle) Perimeter() float64{
+  return 0 
+}
