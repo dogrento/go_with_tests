@@ -1,7 +1,8 @@
 package main
 
-import(
-  "fmt"
+import (
+	"fmt"
+  "errors"
 )
 
 // Creating new types from existing ones
@@ -27,6 +28,10 @@ func(w *Wallet) Deposit(value Bitcoin){
 func(w *Wallet) Balance() Bitcoin{
   return w.balance
 }
-func(w *Wallet) Withdraw(value Bitcoin){
+func(w *Wallet) Withdraw(value Bitcoin) error{
+  if value > w.balance{
+    return errors.New("Oh, snap!")
+  }
   w.balance -= value
+  return nil
 }
