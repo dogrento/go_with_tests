@@ -60,18 +60,19 @@ func TestArea(t *testing.T){
     // - declaring a slice of structs ([]struct)
     // - then fill de slice with cases
     areaTests := []struct{
+      name string
       shape Shape
-      want float64
+      hasArea float64
     }{
-      {shape: Rectangle{Width: 12, Height: 6}, want: 72.0},
-      {shape: Circle{Radius: 10}, want: 314.1592653589793},
-      {shape: Triangle{Height: 12, Base: 6}, want: 36.0},
+      {name: "Rectangle",shape: Rectangle{Width: 12, Height: 6}, hasArea: 72.0},
+      {name: "Circle",shape: Circle{Radius: 10}, hasArea: 314.1592653589793},
+      {name: "Triangle",shape: Triangle{Height: 12, Base: 6}, hasArea: 36.0},
     }
 
     for _, tt := range areaTests{
       got := tt.shape.Area()
-      if got != tt.want{
-        t.Errorf("\n%#v\ngot -> %g\nwant -> %g", tt.shape,got, tt.want)
+      if got != tt.hasArea{
+        t.Errorf("\n%#v\ngot -> %g\nhasArea -> %g", tt.shape,got, tt.hasArea)
       }
     }
   })
