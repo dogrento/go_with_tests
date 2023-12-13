@@ -58,6 +58,21 @@ func TestInsert(t *testing.T){
   })
 }
 
+func TestUpdate(t *testing.T){
+  t.Run("Updating dict", func(t *testing.T){
+    key := "test"
+    value := "test_value"
+    dict := Dictionary{key: value}
+
+    newValue := "new_test_value"
+
+    dict.Update(key, newValue)
+
+    assertValue(t, dict, key, newValue)
+
+  })
+}
+
 func assertStrings(t testing.TB, got, want string){
   t.Helper()
 

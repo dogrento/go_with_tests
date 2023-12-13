@@ -1,12 +1,15 @@
 package main
 
 import (
-	"errors"
 )
 
-var (
-  ErrKeyNotFound = errors.New("Key not found!")
-  ErrWordExists = errors.New("Key already exists.")
+type DictionaryErr string
+func (e DictionaryErr) Error() string{
+  return string(e)
+}
+const (
+  ErrKeyNotFound = DictionaryErr("Key not found!")
+  ErrWordExists = DictionaryErr("Key already exists.")
 )
 
 // creating a wrapper Dictionary around map 
@@ -35,4 +38,16 @@ func (d Dictionary) Insert(key, value string)error{
       return err
   }
   return nil
+}
+
+func (d Dictionary) Update(key, value string)error{
+  _, err := d.Search(key)
+
+  switch err{
+    case ErrKeyNotFound:
+      return err
+    case nil:
+      d[key] = value
+  }
+  return err
 }
