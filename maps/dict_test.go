@@ -27,7 +27,18 @@ func TestSearch(t *testing.T){
     }
 
     // Error can be converted to a string with the Error()
-    assertStrings(t, err.Error(), want.Error())
+    // assertStrings(t, err.Error(), want.Error())
+    assertError(t, err, want)
+  })
+
+  t.Run("Insert key", func(t *testing.T){
+    key := "otherKey"
+    value := "otherValue"
+
+    dict.Insert(key, value)
+    got, _ := dict.Search(key)
+    want := value 
+    assertStrings(t, got, want)
   })
 }
 
@@ -38,4 +49,12 @@ func assertStrings(t testing.TB, got, want string){
     t.Errorf("\ngot -> %s\nwant -> %s", got, want)
   }
 
+}
+
+func assertError(t testing.TB, got, want error){
+  t.Helper()
+
+  if got != want{
+    t.Errorf("\ngot error -> %q\nwant error -> %q", got, want)
+  }
 }

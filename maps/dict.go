@@ -9,6 +9,9 @@ var ErrKeyNotFound = errors.New("Key not found!")
 type Dictionary map[string]string
 
 func (d Dictionary) Search(key string) (string, error){
+  // map lookup returns 2 values
+  // - first: the value itself, if none then the value= ""
+  // - second: a boolean
   value, ok := d[key]
   if !ok{
     return "", ErrKeyNotFound
