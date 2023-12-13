@@ -1,7 +1,8 @@
 package main
 
-import(
-  "testing"
+import (
+	"fmt"
+	"testing"
 )
 
 func TestSearch(t *testing.T){
@@ -43,7 +44,18 @@ func TestInsert(t *testing.T){
 
     assertValue(t, dict, key, value)
   })
+  
+  t.Run("Inserting existing key", func(t *testing.T){
+    // key := "test"
+    // value := "this is just a test"
 
+    // dict := Dictionary{"test": "this is just a test"}
+    err := dict.Insert("test", "this is just a test")
+    fmt.Println(err)
+
+    assertError(t, err, ErrWordExists)
+    assertValue(t, dict, "test", "this is just a test")
+  })
 }
 
 func assertStrings(t testing.TB, got, want string){
