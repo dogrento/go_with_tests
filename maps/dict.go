@@ -10,6 +10,7 @@ func (e DictionaryErr) Error() string{
 const (
   ErrKeyNotFound = DictionaryErr("Key not found!")
   ErrWordExists = DictionaryErr("Key already exists.")
+  ErrWordDoesNotExists = DictionaryErr("Key does not exists for update.")
 )
 
 // creating a wrapper Dictionary around map 
@@ -45,9 +46,11 @@ func (d Dictionary) Update(key, value string)error{
 
   switch err{
     case ErrKeyNotFound:
-      return err
+      return ErrWordDoesNotExists
     case nil:
       d[key] = value
+    default:
+      return err
   }
-  return err
+  return nil
 }

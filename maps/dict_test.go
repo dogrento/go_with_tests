@@ -59,17 +59,25 @@ func TestInsert(t *testing.T){
 }
 
 func TestUpdate(t *testing.T){
-  t.Run("Updating dict", func(t *testing.T){
-    key := "test"
-    value := "test_value"
-    dict := Dictionary{key: value}
+  key := "test1"
+  value := "test1_value"
+  dict := Dictionary{key: value}
 
+  t.Run("Updating dict", func(t *testing.T){
     newValue := "new_test_value"
 
     dict.Update(key, newValue)
 
     assertValue(t, dict, key, newValue)
+  })
 
+  t.Run("key that does not exist", func(t *testing.T){
+    otherKey := "test2"
+    otherValue := "test2_value"
+
+    err := dict.Update(otherKey, otherValue)
+
+    assertError(t, err, ErrWordDoesNotExists)
   })
 }
 
@@ -79,7 +87,6 @@ func assertStrings(t testing.TB, got, want string){
   if got != want{
     t.Errorf("\ngot -> %s\nwant -> %s", got, want)
   }
-
 }
 
 func assertValue(t testing.TB, dict Dictionary, key, value string){
