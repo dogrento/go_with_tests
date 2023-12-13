@@ -30,16 +30,20 @@ func TestSearch(t *testing.T){
     // assertStrings(t, err.Error(), want.Error())
     assertError(t, err, want)
   })
+}
+
+func TestInsert(t *testing.T){
+  dict := Dictionary{"test": "this is just a test"}
 
   t.Run("Insert key", func(t *testing.T){
     key := "otherKey"
     value := "otherValue"
 
     dict.Insert(key, value)
-    got, _ := dict.Search(key)
-    want := value 
-    assertStrings(t, got, want)
+
+    assertValue(t, dict, key, value)
   })
+
 }
 
 func assertStrings(t testing.TB, got, want string){
@@ -49,6 +53,16 @@ func assertStrings(t testing.TB, got, want string){
     t.Errorf("\ngot -> %s\nwant -> %s", got, want)
   }
 
+}
+
+func assertValue(t testing.TB, dict Dictionary, key, value string){
+  t.Helper()
+
+  got, err := dict.Search(key)
+  if err != nil{
+    t.Fatalf("Expected to find: %q. %q", key, err)
+  }
+  assertStrings(t, got, value)
 }
 
 func assertError(t testing.TB, got, want error){
