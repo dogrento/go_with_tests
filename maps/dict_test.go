@@ -10,9 +10,10 @@ func TestSearch(t *testing.T){
     // - first is the key type which is written inside the []
     // - second is the value type, goes after []
     // NOTE: key type is a "comparable type"
-    dict := map[string]string{"test": "this is just a test"}
+    // dict := map[string]string{"test": "this is just a test"}
+    dict := Dictionary{"test": "this is just a test"}
 
-    got := Search(dict, "test")
+    got := dict.Search("test")
     want := "this is just a test"
 
     assertStrings(t, got, want)
