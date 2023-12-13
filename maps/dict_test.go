@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -46,12 +45,7 @@ func TestInsert(t *testing.T){
   })
   
   t.Run("Inserting existing key", func(t *testing.T){
-    // key := "test"
-    // value := "this is just a test"
-
-    // dict := Dictionary{"test": "this is just a test"}
     err := dict.Insert("test", "this is just a test")
-    fmt.Println(err)
 
     assertError(t, err, ErrWordExists)
     assertValue(t, dict, "test", "this is just a test")
@@ -78,6 +72,20 @@ func TestUpdate(t *testing.T){
     err := dict.Update(otherKey, otherValue)
 
     assertError(t, err, ErrWordDoesNotExists)
+  })
+}
+
+func TestDelete(t *testing.T){
+  t.Run("Delete key from dict", func(t *testing.T){
+    key := "test"
+    dict := Dictionary{key: "test_value"}
+
+    dict.Delete(key)
+
+    _, err := dict .Search(key)
+    if err != ErrKeyNotFound{
+      t.Errorf("Expected %q to be deleted", key)
+    }
   })
 }
 
