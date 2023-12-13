@@ -5,6 +5,9 @@ import (
   "errors"
 )
 
+//var: allows to define values global to the package
+var ErrInsufficientFunds = errors.New("Cannot withdraw, insufficient funds.")
+
 // Creating new types from existing ones
 // - to make Bitcoin type, use syntax: Bitcoin(value)
 type Bitcoin float64
@@ -30,7 +33,7 @@ func(w *Wallet) Balance() Bitcoin{
 }
 func(w *Wallet) Withdraw(value Bitcoin) error{
   if value > w.balance{
-    return errors.New("Cannot withdraw, insufficient funds.")
+    return ErrInsufficientFunds
   }
   w.balance -= value
   return nil

@@ -20,6 +20,8 @@ func TestWallet(t *testing.T){
   assertError := func(t testing.TB, got error, want string){
     t.Helper()
     if got == nil{
+      // t.Fatal will stop the test if it is called
+      // - without this the test would carry on to tyhe next step and panic because of a nil pointer.
       t.Fatal("seeking error but none found")
     }
 
