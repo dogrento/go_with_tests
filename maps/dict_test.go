@@ -13,18 +13,21 @@ func TestSearch(t *testing.T){
   dict := Dictionary{"test": "this is just a test"}
 
   t.Run("Known key", func(t *testing.T){
-    got := dict.Search("test")
+    got, _ := dict.Search("test")
     want := "this is just a test"
 
     assertStrings(t, got, want)
   })
-   t.Run("Unknown key", func(t *testing.T){
+  t.Run("Unknown key", func(t *testing.T){
     _, err := dict.Search("unknown")
-    want := "could not find the word you were looking for"
+    want := ErrKeyNotFound 
 
     if err == nil{
       t.Fatal("expected to get an error.")
     }
+
+    // Error can be converted to a string with the Error()
+    assertStrings(t, err.Error(), want.Error())
   })
 }
 
