@@ -1,16 +1,14 @@
 package main
 
 import(
-  "time"
   "fmt"
+  "bytes"
 )
 
-func Countdown(){
-  fmt.Println("qual fita porra")
-  time.Sleep(5)
-  fmt.Println("porra caralho")
+func Countdown(out *bytes.Buffer){
+  fmt.Fprint(out, "3")
 }
 
 func main(){
-  Countdown()
+  // Countdown()
 }
