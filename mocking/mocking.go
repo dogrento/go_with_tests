@@ -8,11 +8,26 @@ import (
   "time"
 )
 
+type Sleeper interface{
+  Sleep()
+}
+
+//MOCK
+// Spies are a kind of mock which can record how a dependency is used
+// they can record the arguments sent in, how many times it has been called, etc.
+// In this case, this gonna track of how many time Sleep() is called
+type SpySleeper struct{
+  Calls int
+}
+
+func (s *SpySleeper) Sleep(){
+  s.Calls++
+}
+
 const(
   finalWord = "Go!"
   countdownStart = 3
 )
-
 
 // it takes an io.Writer
 // and sends a string
