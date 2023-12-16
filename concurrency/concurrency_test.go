@@ -3,6 +3,7 @@ package main
 import (
 	"reflect"
 	"testing"
+	"time"
 )
 
 func mockWebsiteChecker(url string) bool{
@@ -11,6 +12,19 @@ func mockWebsiteChecker(url string) bool{
   }
 
   return true
+}
+
+func slowWebsiteChecker(_ string) bool{
+  time.Sleep(20 * time.Millisecond)
+  return true
+}
+
+func BenchmarkCheckWebsites(b *testing.B){
+  // creating a slice of string type with 100 elements
+  urls := make([]string, 100)
+  for i := 0; i < b.N; i++{
+    CheckWebsites(slowWebsiteChecker, urls)
+  }
 }
 
 func TestCheckWebsites(t *testing.T){
