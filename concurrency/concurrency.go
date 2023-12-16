@@ -7,7 +7,10 @@ func CheckWebsites(wc WebsiteChecker, urls []string) map[string]bool{
   results := make(map[string]bool)
 
   for _, url := range urls{
-    results[url] = wc(url)
+    // creating a go routine as an anonymous func
+    go func(){
+      results[url] = wc(url)
+    }()
   }
 
   return results

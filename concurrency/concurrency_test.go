@@ -22,6 +22,15 @@ func slowWebsiteChecker(_ string) bool{
 func BenchmarkCheckWebsites(b *testing.B){
   // creating a slice of string type with 100 elements
   urls := make([]string, 100)
+
+  // populating slice
+  for i := 0; i< len(urls); i++{
+    urls[i] = "a url"
+  }
+
+  // reseting test time before it actually runs 
+  b.ResetTimer()
+
   for i := 0; i < b.N; i++{
     CheckWebsites(slowWebsiteChecker, urls)
   }
