@@ -19,7 +19,11 @@ func TestRacer(t *testing.T){
     fastUrl := fastServer.URL
 
     want := fastUrl
-    got, _ := Racer(slowUrl, fastUrl)
+    got, err := Racer(slowUrl, fastUrl)
+
+    if err != nil{
+      t.Fatalf("did not expected error> %v", err)
+    }
 
     if got != want{
       t.Errorf("\ngot -> %s\nwant -> %s", got, want)
@@ -27,16 +31,18 @@ func TestRacer(t *testing.T){
   })
 
   t.Run("return err if a sever doesn't respond within 10s", func(t *testing.T){
-    serverA := makeDelayedServer(11 * time.Second)
-    serverB := makeDelayedServer(12 * time.Second)
+    // serverA := makeDelayedServer(11 * time.Second)
+    // serverB := makeDelayedServer(12 * time.Second)
+    server := makeDelayedServer(25 * time.Millisecond)
 
     // defer will call the following function at the end of the containing function
     // -this benefits reading code bc it keeps the close operation (in this case),
     // close to its calling line
-    defer serverA.Close()
-    defer serverB.Close()
+    // defer serverA.Close()
+    // defer serverB.Close()
+    defer server.Close()
 
-    _, err := Racer(serverA.URL, serverB.URL)
+    _, err := ConfigurableRacer(server.URL, server.URL, 20*time.Millisecond)
 
     if err == nil{
       t.Errorf("expected an error but didn't get one.")
