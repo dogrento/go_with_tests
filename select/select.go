@@ -1,19 +1,23 @@
 package main
 
-import(
-  "time"
-  "net/http"
+import (
+	"fmt"
+	"net/http"
+	"time"
+	// "error"
 )
 
-func Racer(a, b string) string{
+func Racer(a, b string) (winner string, err error){
   // select allow you to wait on multiple channels.
   // The first one to send a value "wins" and the code
   // underneath the case is executed.
   select{
   case <-ping(a):
-    return a
+    return a, nil
   case <-ping(b):
-    return b
+    return b, nil
+  case <-time.After(10 * time.Second):
+    return "", fmt.Errorf("timed out wainting for %s and %s", a, b)
   }
 }
 
