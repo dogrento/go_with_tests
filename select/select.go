@@ -20,6 +20,7 @@ func ConfigurableRacer(a, b string, timeout time.Duration) (winner string, err e
     return a, nil
   case <-ping(b):
     return b, nil
+  // time.After return as a ch so it can prevent cases to be blocked forever  
   case <-time.After(timeout):
     return "", fmt.Errorf("timed out wainting for %s and %s", a, b)
   }
