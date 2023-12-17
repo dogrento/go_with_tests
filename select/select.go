@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	// "error"
 )
 
+var tenSecondTimeout = 10 * time.Second
+
 func Racer(a, b string) (winner string, err error){
+  return ConfigurableRacer(a, b, tenSecondTimeout)
+}
+func ConfigurableRacer(a, b string, timeout time.Duration) (winner string, err error){
   // select allow you to wait on multiple channels.
   // The first one to send a value "wins" and the code
   // underneath the case is executed.
@@ -16,7 +20,7 @@ func Racer(a, b string) (winner string, err error){
     return a, nil
   case <-ping(b):
     return b, nil
-  case <-time.After(10 * time.Second):
+  case <-time.After(timeout):
     return "", fmt.Errorf("timed out wainting for %s and %s", a, b)
   }
 }
