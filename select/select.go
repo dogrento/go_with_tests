@@ -6,14 +6,9 @@ import(
 )
 
 func Racer(a, b string) string{
-  // aDuration := measureResponseTime(a)
-  // bDuration := measureResponseTime(b)
-
-  // if aDuration < bDuration{
-  //   return a
-  // }
-
-  // return b
+  // select allow you to wait on multiple channels.
+  // The first one to send a value "wins" and the code
+  // underneath the case is executed.
   select{
   case <-ping(a):
     return a
