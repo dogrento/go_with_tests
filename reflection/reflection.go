@@ -5,9 +5,11 @@ import "reflect"
 func walk(x interface{}, fn func(input string)){
   // ValueOf returns a value of a given variable
   // so we can inspect a value
-  val := reflect.ValueOf(x)
   // - and it's fields
-  field := val.Field(0)
+  val := reflect.ValueOf(x)
 
-  fn(field.String())
+  for i := 0; i < val.NumField(); i++{
+    field := val.Field(i)
+    fn(field.String())
+  }
 }
