@@ -9,10 +9,13 @@ func TestWalk(t *testing.T){
 
     expected := "dgt"
     var got []string
+
+    // creating anonymous struct
     x := struct{
       Name string
     }{expected}
 
+    // walk with spy
     walk(x, func(input string){
       got = append(got, input)
     })
