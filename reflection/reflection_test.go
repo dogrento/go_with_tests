@@ -77,14 +77,6 @@ func TestWalk(t *testing.T){
       },
       []string{"curitiba", "sao paulo"},
     },
-    {
-      "maps",
-      map[string]string{
-        "cow": "moo",
-        "sheep": "baa",
-      },
-      []string{"moo", "baa"},
-    },
   }
 
   for _, test := range cases{
@@ -95,8 +87,37 @@ func TestWalk(t *testing.T){
       })
 
       if !reflect.DeepEqual(got, test.ExpectedCalls){
-        t.Errorf("\ngot -> %v\nwant -> %v", got, test.ExpectedCalls)
+        t.Errorf("\ngot -> %v\nwant -> %v", got, test.ExpectedCalls)  
       }
     })
+  }
+
+  t.Run("Maps", func(t *testing.T){
+    aMap := map[string]string{
+      "cow": "moo",
+      "sheep": "baa",
+    }
+
+    var got []string
+    walk(aMap, func(input string){
+      got = append(got, input)
+    })
+
+    assertContains(t, got, "moo")
+    assertContains(t, got, "baa")
+  })
+}
+
+func assertContains(t testing.TB, got []string, str string){
+  t.Helper()
+  contains := false
+  for _, x := range got{
+    if x == str{
+      contains = true
+    }
+  }
+
+  if !contains{
+    t.Errorf("expected %v to contain %q but it didnt", got, str)
   }
 }
