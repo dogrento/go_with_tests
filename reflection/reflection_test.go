@@ -138,7 +138,6 @@ func TestWalk(t *testing.T){
 
     walk(aFunction, func(input string){
       got = append(got, input)
-
     })
 
     if !reflect.DeepEqual(got, want){
