@@ -5,43 +5,37 @@ import "reflect"
 func walk(x interface{}, fn func(input string)){
   val := getValue(x)
 
+  numberOfValues := 0
+  var getField func(int) reflect.Value
+
   switch val.Kind(){
+  // if it's a struct or a slice, we iterate over its values
   case reflect.Slice:
-  for i := 0; i < val.Len(); i++{
-    walk(val.Index(i).Interface(), fn)
-  }
+  // for i := 0; i < val.Len(); i++{
+  //   walk(val.Index(i).Interface(), fn)
+  // }
+    numberOfValues = val.Len()
+    getField = val.Index
   case reflect.Struct:
-  for i := 0; i < val.NumField(); i++{
-    walk(val.Field(i).Interface(), fn)
-  }
+  // for i := 0; i < val.NumField(); i++{
+  //   walk(val.Field(i).Interface(), fn)
+  // }
+    numberOfValues = val.NumField()
+    getField = val.Field
   case reflect.String:
     fn(val.String())
   }
-  // if val.Kind() == reflect.Slice{
-  //   for i := 0; i < val.Len(); i++{
-  //     walk(val.Index(i).Interface(), fn)
-  //   }
 
-  //   return
-  // }
-
-  // for i := 0; i < val.NumField(); i++{
-  //   field := val.Field(i)
-
-  //   switch field.Kind(){
-  //   case reflect.String:
-  //     fn(field.String())
-  //   case reflect.Struct:
-  //     walk(field.Interface(), fn)
-  //   }
-  // }
+  for i := 0; i < numberOfValues; i++{
+    walk(getField(i).Interface(), fn)
+  }
 }
 
 func getValue(x interface{}) reflect.Value{
   // ValueOf returns a value of a given variable
   // so we can inspect a value
   // - and it's fields
-  val := reflect.ValueOf(x)
+  val := reflect.ValueOf(x)     
 
   // cant use NumField on a ptr value
   // it is needed to extract the underlying value before we can do that with Elem()
