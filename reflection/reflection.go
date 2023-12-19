@@ -10,16 +10,10 @@ func walk(x interface{}, fn func(input string)){
 
   switch val.Kind(){
   // if it's a struct or a slice, we iterate over its values
-  case reflect.Slice:
-  // for i := 0; i < val.Len(); i++{
-  //   walk(val.Index(i).Interface(), fn)
-  // }
+  case reflect.Slice, reflect.Array:
     numberOfValues = val.Len()
     getField = val.Index
   case reflect.Struct:
-  // for i := 0; i < val.NumField(); i++{
-  //   walk(val.Field(i).Interface(), fn)
-  // }
     numberOfValues = val.NumField()
     getField = val.Field
   case reflect.String:
