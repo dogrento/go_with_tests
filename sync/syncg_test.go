@@ -7,7 +7,8 @@ import (
 
 func TestCounter(t * testing.T){
   t.Run("incrementing the counter 3 times leaves it at 3", func(t *testing.T){
-    counter := Counter{}
+    // counter := Counter{}
+    counter := NewCounter()
     counter.Inc()
     counter.Inc()
     counter.Inc()
@@ -16,7 +17,8 @@ func TestCounter(t * testing.T){
   })
   t.Run("runs safely concurrently", func(t *testing.T){
     wantedCount := 1000
-    counter := Counter{}
+    // counter := Counter{}
+    counter := NewCounter()
 
     // waitgroup waits for a collection of goroutines to finish
     var wg sync.WaitGroup
@@ -39,7 +41,7 @@ func TestCounter(t * testing.T){
   })
 }
 
-func assertCounter(t testing.TB, got Counter, want int){
+func assertCounter(t testing.TB, got *Counter, want int){
   t.Helper()
   if got.Value() != want{
     t.Errorf("got %d, want %d", got.Value(), want)

@@ -17,3 +17,11 @@ func(c *Counter) Inc(){
 func(c *Counter) Value() int{
   return c.value
 }
+
+// Constructor which show readers of API that would be better to not initialise the type yourself
+// bc of a property from mutex:
+// -Mutex must not be copied after first use.
+func NewCounter() *Counter{
+  // return the addr of the instance of Counter
+  return &Counter{}
+}
