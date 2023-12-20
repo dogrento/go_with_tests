@@ -6,7 +6,7 @@ import (
 )
 
 type Store interface{
-  Fetch()
+  Fetch() string
 }
 
 func Server(store Store) http.HandlerFunc{
