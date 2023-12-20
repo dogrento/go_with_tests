@@ -23,8 +23,9 @@ func (s *SpyStore) Cancel(){
 func TestServer(t *testing.T){
   data := "hello world"
 
-  t.Run("testing server response", func(t *testing.T){
-    svr := Server(&SpyStore{response: data})
+  t.Run("returns data from store", func(t *testing.T){
+    store := &SpyStore{response: data}
+    svr := Server(store)
 
     request := httptest.NewRequest(http.MethodGet, "/", nil)
     response := httptest.NewRecorder()
@@ -42,8 +43,11 @@ func TestServer(t *testing.T){
 
     request := httptest.NewRequest(http.MethodGet, "/", nil)
 
+    // Derive a new cancellingCtx from request which returns a cancel function
     cancellingCtx, cancel := context.WithCancel(request.Context())
+    // Schedule the cancel function to be called in 5 ms
     time.AfterFunc(5 * time.Millisecond, cancel)
+    // Using the new context in request by calling rq.withcontext
     request = request.WithContext(cancellingCtx)
 
     response := httptest.NewRecorder()
