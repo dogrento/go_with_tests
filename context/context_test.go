@@ -6,17 +6,21 @@ import (
 	"testing"
 )
 
-type StubStore struct{
-  response string
+type SpyStore struct{
+  response  string
+  cancelled bool
 }
-func (s *StubStore) Fetch() string{
+func (s *SpyStore) Fetch() string{
   return s.response
+}
+func (s *SpyStore) Cancel(){
+  s.cancelled = true
 }
 
 func TestServer(t *testing.T){
   t.Run("testing server response", func(t *testing.T){
     data := "hello world"
-    svr := Server(&StubStore{data})
+    svr := Server(&SpyStore{data})
 
     request := httptest.NewRequest(http.MethodGet, "/", nil)
     response := httptest.NewRecorder()
