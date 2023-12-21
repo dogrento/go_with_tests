@@ -19,6 +19,9 @@ func (s *SpyStore) Fetch(ctx context.Context) (string, error){
   go func(){
     var result string
     
+    //We are simulating a slow process where we build the result slowly by appending the string char by char in a goroutine
+    // when goroutine finishes its work, it writes the string to the data chan
+    // goroutine listens for the ctx.Doone and will stop the work if a signal is sent in that chan.
     for _, c := range s.response{
       select{
       case <-ctx.Done():
@@ -32,6 +35,7 @@ func (s *SpyStore) Fetch(ctx context.Context) (string, error){
     data <- result
   }()
 
+  // Waits for goroutine to finish its job or for the cancellation to occur.
   select{
   case <-ctx.Done():
     return "", ctx.Err()
