@@ -10,9 +10,10 @@ func ConvertToRoman(value int) string{
   // - It minimizes memory copying
   var result strings.Builder
 
-  for i := 0; i < value; i++{
-    if value == 4{
-      return "IV"
+  for i := value; i > 0; i--{
+    if i == 4{
+      result.WriteString("IV")
+      break
     }
     result.WriteString("I")
   }
