@@ -60,20 +60,14 @@ func ConvertToArabic(roman string) int{
     symbol := roman[i]
 
     if couldBeSubtractive(i, symbol, roman){
-      nextSymbol := roman[i+1]
-
-      potencialNumber := string([]byte{symbol, nextSymbol})
-
-      value := allRomanNumerals.ValueOf(potencialNumber)
-
-      if value != allRomanNumerals.ValueOf(potencialNumber); value != 0{
+      if value := allRomanNumerals.ValueOf(symbol, roman[i+1]); value != 0{
         total += value
         i++
       }else{
-        total++
+        total += allRomanNumerals.ValueOf(symbol)
       }
     }else{
-      total += allRomanNumerals.ValueOf(string([]byte{symbol}))
+      total += allRomanNumerals.ValueOf(symbol)
     }
   }
 
@@ -81,5 +75,6 @@ func ConvertToArabic(roman string) int{
 }
 
 func couldBeSubtractive(index int, symbol uint8, roman string) bool{
-  return index+1 < len(roman) && symbol == 'I' 
+  isSubtractiveSymbol := symbol == 'I' || symbol == 'X' || symbol == 'C'
+  return index+1 < len(roman) && isSubtractiveSymbol
 }
