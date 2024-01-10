@@ -1,0 +1,5 @@
+package clockface
+
+func SecondHand(){
+
+}
