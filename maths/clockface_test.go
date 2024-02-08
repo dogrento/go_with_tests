@@ -16,7 +16,7 @@ func TestSecondHandPoint(t *testing.T){
 
   for _, c := range cases{
     t.Run(testName(c.time), func(t *testing.T){
-      got := c.point
+      got := secondHandPoint(c.time)
       if got != c.point{
         t.Fatalf("wanted %v Point, but got %v", c.point, got)
       }
@@ -33,6 +33,10 @@ func TestSecondHandAtMidnight(t *testing.T){
   if got != want{
     t.Errorf("got %v, wanted %v", got, want)
   }
+}
+
+func secondHandPoint(tm time.Time) clockface.Point{
+  return clockface.Point{}
 }
 
 // func TestSecondHandAt30Seconds(t *testing.T){
