@@ -32,6 +32,29 @@ func secondsInRadians(t time.Time) float64{
   return (math.Pi / (30 / (float64(t.Second()))))
 }
 
+func TestMinutesInRadians(t *testing.T){
+  cases := []struct{
+    time time.Time
+    angle float64
+  }{
+    {simpleTime(0, 30, 0), math.Pi},
+    {simpleTime(0, 0, 7), 7 * (math.Pi / (30 * 60))},
+  }
+
+  for _, c := range cases{
+    t.Run(testName(c.time), func(t *testing.T){
+      got := minutesInRadians(c.time)
+      if got != c.angle{
+        t.Fatalf("Wanted %v radians, but got %v", c.angle, got)
+      }
+    })
+  }
+}
+
+func minutesInRadians(t time.Time) float64{
+  return math.Pi
+}
+
 func TestSecondHandPoint(t *testing.T){
   cases := []struct {
     time time.Time
