@@ -32,29 +32,6 @@ func secondsInRadians(t time.Time) float64{
   return (math.Pi / (30 / (float64(t.Second()))))
 }
 
-func TestMinutesInRadians(t *testing.T){
-  cases := []struct{
-    time time.Time
-    angle float64
-  }{
-    {simpleTime(0, 30, 0), math.Pi},
-    {simpleTime(0, 0, 7), 7 * (math.Pi / (30 * 60))},
-  }
-
-  for _, c := range cases{
-    t.Run(testName(c.time), func(t *testing.T){
-      got := minutesInRadians(c.time)
-      if got != c.angle{
-        t.Fatalf("Wanted %v radians, but got %v", c.angle, got)
-      }
-    })
-  }
-}
-
-func minutesInRadians(t time.Time) float64{
-  return math.Pi
-}
-
 func TestSecondHandPoint(t *testing.T){
   cases := []struct {
     time time.Time
@@ -74,6 +51,58 @@ func TestSecondHandPoint(t *testing.T){
   }
 }
 
+func TestMinutesInRadians(t *testing.T){
+  cases := []struct{
+    time time.Time
+    angle float64
+  }{
+    {simpleTime(0, 30, 0), math.Pi},
+    {simpleTime(0, 0, 7), 7 * (math.Pi / (30 * 60))},
+  }
+
+  for _, c := range cases{
+    t.Run(testName(c.time), func(t *testing.T){
+      got := minutesInRadians(c.time)
+      if got != c.angle{
+        t.Fatalf("Wanted %v radians, but got %v", c.angle, got)
+      }
+    })
+  }
+}
+
+func TestMinuteHandPoint(t *testing.T){
+  cases := []struct {
+    time time.Time
+    point clockface.Point
+  }{
+    {simpleTime(0, 30, 0), clockface.Point{0, -1}},
+  }
+
+  for _, c := range cases{
+    t.Run(testName(c.time), func(t *testing.T){
+      got := minuteHandPoint(c.time)
+      if !roughlyEqualPoint(got, c.point){
+        t.Fatalf("got %v radians, wanted %v", got, c.point)
+      }
+    })
+  }
+}
+
+func minuteHandPoint(t time.Time) clockface.Point{
+  return angleToPoint(minutesInRadians(t))
+}
+
+func minutesInRadians(t time.Time) float64{
+  return (secondsInRadians(t) / 60 + (math.Pi / (30 / float64(t.Minute())))) 
+}
+
+func angleToPoint(angle float64) clockface.Point{
+  x := math.Sin(angle)
+  y := math.Cos(angle)
+
+  return clockface.Point{x, y}
+}
+
 func roughlyEqualFloat64(a, b float64) bool{
   const equalityThreshold = 1e-7
   return math.Abs(a-b) < equalityThreshold
@@ -84,10 +113,7 @@ func roughlyEqualPoint(a, b clockface.Point) bool{
 }
 
 func secondHandPoint(t time.Time) clockface.Point{
-  angle := secondsInRadians(t)
-  x:= math.Sin(angle)
-  y := math.Cos(angle)
-  return clockface.Point{x, y}
+  return angleToPoint(secondsInRadians(t))
 }
 
 
